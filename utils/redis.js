@@ -18,6 +18,10 @@ class RedisClient {
     this.delAsync = promisify(this.client.del).bind(this.client);
   }
 
+  isAlive() {
+    return this.client.connected;
+  }
+
   async get(key) {
     return this.getAsync(key);
   }
