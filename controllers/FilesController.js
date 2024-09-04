@@ -3,6 +3,7 @@ import { promises as fsPromises } from 'fs';
 import path from 'path';
 import dbClient from '../utils/db';
 import redisClient from '../utils/redis';
+import fileQueue from '../worker';
 
 const FOLDER_PATH = process.env.FOLDER_PATH || '/tmp/files_manager';
 
@@ -75,6 +76,11 @@ class FilesController {
       fileData.localPath = localPath;
 
       const result = await dbClient.db.collection('files').insertOne(fileData);
+      
+      if (type === 'image') {
+        fileQueue.add({ userId, fileId: result.insertedId });
+      }
+
       return res.status(201).json({
         id: result.insertedId,
         userId,
