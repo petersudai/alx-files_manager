@@ -1,6 +1,6 @@
 import sha1 from 'sha1';
 import { ObjectId } from 'mongodb';
-import dbClinet from '../utils/db';
+import dbClient from '../utils/db';
 
 class UsersController {
 	static async postNew(req, res) {
