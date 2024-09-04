@@ -17,7 +17,7 @@ class FilesController {
 
     const userId = await redisClient.get(`auth_${token}`);
     if (!userId) {
-      return res.status(401).json({ error: 'Unauthorzied' });
+      return res.status(401).json({ error: 'Unauthorized' });
     }
 
     const {
@@ -71,7 +71,7 @@ class FilesController {
 
     try {
       await fsPromises.mkdir(FOLDER_PATH, { recursive: true });
-      await fsPromises.writerFile(localPath, Buffer.from(data, 'base64'));
+      await fsPromises.writeFile(localPath, Buffer.from(data, 'base64'));
 
       fileData.localPath = localPath;
 
